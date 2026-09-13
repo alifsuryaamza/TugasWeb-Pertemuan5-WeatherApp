@@ -1,4 +1,4 @@
-const API_KEY = '30441bd9a25ecc0855dec3bec3ad1b10'; // Ganti dengan API key dari openweathermap.org
+const API_KEY = '30441bd9a25ecc0855dec3bec3ad1b10'; 
 const BASE_URL = 'https://api.openweathermap.org/data/2.5/weather';
 const HISTORY_KEY = 'weatherApp.history';
 const MAX_HISTORY = 8;
