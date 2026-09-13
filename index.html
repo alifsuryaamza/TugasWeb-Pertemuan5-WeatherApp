@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cuaca — Weather App</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="src/output.css">
+</head>
+<body class="m-0 font-['Inter'] text-white bg-[var(--navy-950)]">
+
+  <main id="sky" class="bg-app min-h-screen flex flex-col items-center px-4 pt-6 pb-12 sm:px-5 sm:pt-8 sm:pb-16">
+
+    <header class="w-full max-w-[420px] flex items-baseline gap-2.5 mb-7">
+      <span class="text-[22px] text-[var(--amber-400)]">☁</span>
+      <span class="font-['Space_Grotesk'] text-xl font-semibold tracking-[0.01em]">Cuaca</span>
+    </header>
+
+    <form id="searchForm" class="w-full max-w-[420px] flex gap-2 mb-5" autocomplete="off">
+      <input
+        type="text"
+        id="cityInput"
+        class="flex-1 px-4 py-3.5 rounded-[14px] border border-white/14 bg-white/6 text-white font-['Inter'] text-[15px] outline-none placeholder-white/40 focus-visible:border-[var(--azure-500)] focus-visible:bg-white/10 transition-colors"
+        placeholder="Cari kota — mis. Medan, Bandung, Tokyo"
+        aria-label="Nama kota"
+      >
+      <button
+        type="submit"
+        class="px-[22px] py-3.5 rounded-[14px] bg-[var(--amber-400)] text-[var(--navy-950)] font-['Inter'] font-semibold text-[15px] cursor-pointer hover:bg-[var(--amber-500)] active:scale-[0.97] transition-transform focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--azure-500)] focus-visible:outline-offset-2"
+      >
+        Cari
+      </button>
+    </form>
+
+    <!-- Loading state -->
+    <div id="loading" class="hidden w-full max-w-[420px] px-4 py-3.5 rounded-[14px] text-sm flex items-center gap-2.5 mb-5 bg-[var(--azure-500)]/14 text-[var(--azure-200)]">
+      <span class="inline-block w-[15px] h-[15px] rounded-full border-2 border-white/25 border-t-[var(--azure-200)] animate-spin motion-reduce:animate-none align-middle mr-1"></span>
+      Mengambil data cuaca…
+    </div>
+
+    <!-- Error state -->
+    <div id="error" class="hidden w-full max-w-[420px] px-4 py-3.5 rounded-[14px] text-sm mb-5 bg-[var(--coral-500)]/16 text-[#ffd4d3]" role="alert"></div>
+
+    <!-- Empty state -->
+    <div id="empty" class="w-full max-w-[420px] px-5 py-9 rounded-[20px] border border-dashed border-white/16 text-center mb-2">
+      <p class="mb-1.5 font-['Space_Grotesk'] text-base font-semibold">Belum ada kota dipilih</p>
+      <p class="m-0 text-[13px] text-[var(--slate-500)]">Ketik nama kota di atas untuk melihat cuacanya sekarang.</p>
+    </div>
+
+    <!-- Weather Result -->
+    <section id="weatherResult" class="hidden w-full max-w-[420px] bg-white/7 border border-white/10 rounded-[20px] p-6 backdrop-blur-[6px] mb-7">
+      <div class="flex items-start justify-between mb-1.5">
+        <div>
+          <h1 id="cityName" class="m-0 font-['Space_Grotesk'] text-2xl font-semibold"></h1>
+          <p id="updatedAt" class="mt-1 mb-0 text-xs text-[var(--slate-500)]"></p>
+        </div>
+        <button
+          type="button"
+          id="unitToggle"
+          class="border border-white/18 bg-white/5 text-white font-['Inter'] font-semibold text-[13px] px-3 py-1.5 rounded-full cursor-pointer hover:bg-white/12 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--azure-500)] focus-visible:outline-offset-2"
+          aria-label="Ganti satuan suhu"
+        >°C</button>
+      </div>
+
+      <div class="flex items-center gap-2 mt-2 mb-5">
+        <img id="weatherIcon" class="w-[68px] h-[68px] -m-2.5 sm:w-[84px] sm:h-[84px]" alt="">
+        <div>
+          <p id="temperature" class="m-0 font-['Space_Grotesk'] text-[40px] sm:text-5xl font-bold leading-none"></p>
+          <p id="description" class="mt-1.5 mb-0 text-[15px] text-[var(--azure-200)] capitalize"></p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 gap-y-3.5 pt-[18px] border-t border-white/10">
+        <div class="flex flex-col gap-1">
+          <span class="text-[11.5px] text-[var(--slate-500)]">Kelembaban</span>
+          <span id="humidity" class="text-[15px] font-semibold"></span>
+        </div>
+        <div class="flex flex-col gap-1">
+          <span class="text-[11.5px] text-[var(--slate-500)]">Angin</span>
+          <span id="wind" class="text-[15px] font-semibold"></span>
+        </div>
+        <div class="flex flex-col gap-1">
+          <span class="text-[11.5px] text-[var(--slate-500)]">Terasa seperti</span>
+          <span id="feelsLike" class="text-[15px] font-semibold"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Search history (bonus feature) -->
+    <section class="w-full max-w-[420px]">
+      <div class="flex items-center justify-between mb-2.5">
+        <h2 class="m-0 font-['Space_Grotesk'] text-[15px] font-semibold text-[var(--azure-200)]">Riwayat pencarian</h2>
+        <button
+          type="button"
+          id="clearHistory"
+          class="hidden bg-transparent border-none text-[var(--coral-500)] text-[13px] font-['Inter'] cursor-pointer p-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--azure-500)] focus-visible:outline-offset-2"
+        >Hapus semua</button>
+      </div>
+      <ul id="historyList" class="list-none m-0 p-0 flex flex-wrap gap-2"></ul>
+      <p id="historyEmpty" class="text-[13px] text-[var(--slate-500)] mt-1">Kota yang kamu cari akan muncul di sini.</p>
+    </section>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

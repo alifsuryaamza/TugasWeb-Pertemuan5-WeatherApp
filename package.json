@@ -1,0 +1,14 @@
+{
+  "name": "weather-app",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Weather App — Tugas Rutin 5",
+  "scripts": {
+    "build": "tailwindcss -i ./src/input.css -o ./src/output.css --minify",
+    "watch": "tailwindcss -i ./src/input.css -o ./src/output.css --watch"
+  },
+  "dependencies": {
+    "@tailwindcss/cli": "^4.3.3",
+    "tailwindcss": "^4.3.3"
+  }
+}

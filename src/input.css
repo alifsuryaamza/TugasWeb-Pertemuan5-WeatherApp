@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+:root {
+  --navy-950: #0f1c33;
+  --navy-800: #1b2a4a;
+  --navy-700: #26385f;
+  --azure-500: #5b8def;
+  --azure-200: #cfe0fb;
+  --amber-400: #ffb84d;
+  --amber-500: #f5a623;
+  --coral-500: #ef6461;
+  --slate-500: #7c8aa5;
+}
+ 
+/* Background langit — gradient majemuk, dipakai sebagai class biasa: bg-app */
+.bg-app {
+  background:
+    radial-gradient(ellipse 900px 500px at 15% -10%, rgb(91 141 239 / 0.35), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 100% 0%, rgb(255 184 77 / 0.18), transparent 55%),
+    linear-gradient(180deg, var(--navy-950) 0%, var(--navy-800) 55%, var(--navy-700) 100%);
+}
